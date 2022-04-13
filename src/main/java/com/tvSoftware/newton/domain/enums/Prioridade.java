@@ -1,5 +1,11 @@
 package com.tvSoftware.newton.domain.enums;
 
+
+/*
+ * Enum de prioridade mostra a prioridade que esse tipo de usuario tem para concetar ao banco
+ * 
+ * */
+
 public enum Prioridade {
 	BAIXA(0, "BAIXA"), MEDIA(1, "MEDIA"), ALTA(2, "ALTA");
 	
@@ -28,7 +34,7 @@ public enum Prioridade {
 				return x;
 			}
 		}
-		throw new IllegalArgumentException("Status invalido");
+		throw new IllegalArgumentException("Prioridade invalido");
 	}
 	
 }

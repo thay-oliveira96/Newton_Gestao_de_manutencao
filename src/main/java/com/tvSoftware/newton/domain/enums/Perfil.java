@@ -1,5 +1,11 @@
 package com.tvSoftware.newton.domain.enums;
 
+
+/*
+ * Esses enums tem o objetivo de controlar perfil de usuarios onde cria os niveis para o que o usuario
+ * pode ou não fazer alterações
+ * 
+ * */
 public enum Perfil {
 	ADMIN(0, "ROLE_ADMIN"), CLIENTE(1, "ROLE_CLIENTE"), TECNICO(2, "ROLE_TECNICO"), GESTOR(3, "ROLE_GESTOR");
 	

@@ -1,5 +1,8 @@
 package com.tvSoftware.newton.domain.enums;
-
+/*
+ * Enum do status de conexão do usuario ao banco
+ * 
+ * */
 public enum Status {
 	ABERTO(0, "ABERTO"), ANDAMENTO(1, "ANDAMENTO"), ENCERRADO(2, "ENCERRADO");
 	
