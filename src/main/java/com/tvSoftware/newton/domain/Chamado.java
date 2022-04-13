@@ -1,22 +1,49 @@
 package com.tvSoftware.newton.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
+/*
+ * Classe chamado tem o objetivo de herdar informação de outras classes, essa classe no sistema será
+ * chamada de ordem de manutenção, onde essa logica tem o objetivo de abertura de ordens de manutenção
+ * herdando informações de outras classes como, pessoa, maquinas, defeitos e etc.
+ * */
+@Entity
 
-public class Chamado {
+public class Chamado implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	//Data recupera o valor no momento da abertura
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataAbertura = LocalDate.now();
 	private LocalDate dataFechamento;
+	//Herda atributos do Enum prioridade
 	private Prioridade prioridade;
+	//herda atributos do Enum Status
 	private Status status;
 	private String titulo;
 	private String observacoes;
 	
+	@ManyToOne // Muitos para um
+	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
+	
+	@ManyToOne // Muitos para um
+	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
 	public Chamado() {
@@ -111,7 +138,7 @@ public class Chamado {
 	public int hashCode() {
 		return Objects.hash(id);
 	}
-
+	//compara ID da classe
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

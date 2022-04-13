@@ -1,24 +1,49 @@
 package com.tvSoftware.newton.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tvSoftware.newton.domain.enums.Perfil;
 /*
  * O Obejto pessoa tem como objetivo Cadastrar pesssoas no banco de dados ele também recebera informações
  * de outras classe com Cliente, Tecnico, Gestor e administrador
  * */
-public abstract class Pessoa {
+
+//Entity apresenta como entidade e cria a tabela de banco de dados com o nome pessoa
+@Entity
+public abstract class Pessoa implements Serializable {
+	private static final long serialVersionUID = 1L;
 	//Utilizando o protect, pois esses atributos não podem ficar publicos, somente recebera das classes herdadas
+	@Id //utiliza para dizer que o atributo ID abaixo é uma chave primaria
+	@GeneratedValue(strategy = GenerationType.IDENTITY) // Especifica quem vai gerar o ID é o banco ou seja para cada objeto o banco vai gerar um ID diferente
 	protected Integer id;
 	protected String nome;
+	
+	@Column(unique = true) // Especifica que a coluna CPF é unica no banco, não vai existir outra coluna com o mesmo valor
 	protected String cpf;
+	@Column(unique = true) // Especifica que a coluna E-mail é unica no banco, não vai existir outra coluna com o mesmo valor
 	protected String email;
 	protected String senha;
+	
+	@ElementCollection(fetch = FetchType.EAGER) //Lista usuarios do bd, quando der um get tras a lista com o usuário
+	@CollectionTable(name = "PERFIS") //Cria Coleção de tabela somente com os perfis.
 	protected Set<Integer> perfis = new HashSet<>();
+	
+	@JsonFormat(pattern = "dd/MM/yyyy") //formata o horario para o padrão especificado
 	protected LocalDate dataCriacao = LocalDate.now();
 	
 	//Metodo construtor!
