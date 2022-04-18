@@ -46,6 +46,10 @@ public class Chamado implements Serializable {
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
+	@ManyToOne // Muitos para um
+	@JoinColumn(name = "cliente_id")
+	private Gestor gestor;
+	
 	public Chamado() {
 		super();
 	}

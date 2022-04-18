@@ -9,27 +9,25 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tvSoftware.newton.domain.enums.Perfil;
 
-/*
- * Objeto cliente 
- *Esse objeto Herda os atributos da Classe Pessoa
- * */
 
-//Utiliza-se extends para herdar a classe cliente
+/*
+ * 	Classe Gestor
+ * 	HErda os atributos da classe pessoa
+ * 																							*/
 @Entity
-public class Cliente extends Pessoa {
-	
+public class Gestor extends Pessoa {
 	private static final long serialVersionUID = 1L;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "cliente")
+	@OneToMany(mappedBy = "gestor") //O tecnico tem diversos chamados 
 	private List<Chamado> chamados = new ArrayList<>();
 
-	public Cliente() {
+	public Gestor() {
 		super();
 		addPerfil(Perfil.CLIENTE);
 	}
 
-	public Cliente(Integer id, String nome, String cpf, String email, String senha) {
+	public Gestor(Integer id, String nome, String cpf, String email, String senha) {
 		super(id, nome, cpf, email, senha);
 		addPerfil(Perfil.CLIENTE);
 	}
@@ -43,4 +41,5 @@ public class Cliente extends Pessoa {
 	}
 	
 	
+
 }
