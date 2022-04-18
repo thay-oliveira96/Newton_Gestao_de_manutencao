@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tvSoftware.newton.domain.enums.Perfil;
 
 
@@ -17,8 +18,8 @@ import com.tvSoftware.newton.domain.enums.Perfil;
 public class Tecnico extends Pessoa {
 	private static final long serialVersionUID = 1L;
 	
-	//O tecnico tem diversos chamados 
-	@OneToMany(mappedBy = "tecnico")
+	@JsonIgnore
+	@OneToMany(mappedBy = "tecnico") //O tecnico tem diversos chamados 
 	private List<Chamado> chamados = new ArrayList<>();
 
 	public Tecnico() {
