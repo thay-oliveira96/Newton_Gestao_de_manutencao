@@ -12,7 +12,7 @@ import com.tvSoftware.newton.domain.enums.Perfil;
 
 /*
  * 	Classe Gestor
- * 	HErda os atributos da classe pessoa
+ * 	Herda os atributos da classe pessoa
  * 																							*/
 @Entity
 public class Gestor extends Pessoa {

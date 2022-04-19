@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.tvSoftware.newton.domain.Chamado;
 import com.tvSoftware.newton.domain.Cliente;
+import com.tvSoftware.newton.domain.Gestor;
 import com.tvSoftware.newton.domain.Tecnico;
 import com.tvSoftware.newton.domain.enums.Perfil;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
 import com.tvSoftware.newton.repositories.ChamadoRepository;
 import com.tvSoftware.newton.repositories.ClienteRepository;
+import com.tvSoftware.newton.repositories.GestorRepository;
 import com.tvSoftware.newton.repositories.TecnicoRepository;
 
 //injeção de dependencias
@@ -30,6 +32,8 @@ public class DBServices {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	private ChamadoRepository chamadoRepository;
+	@Autowired
+	private GestorRepository gestorRepository;
 	
 	public void instanciaDB() {
 		//Teste de dados para alimentar o banco de dados
@@ -38,11 +42,15 @@ public class DBServices {
 				
 				Cliente cli1 = new Cliente(null, "Linus Torvalds", "33333333333", "torvalds@mail.com", "123");
 				
+				Gestor gest1 = new Gestor(null, "Douglas Oliveira", "2222222222", "dogao@mail.com", "2424");
+				
 				Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado 01", "Primeiro Chamado", tec1, cli1);
 				
 				tecnicoRepository.saveAll(Arrays.asList(tec1));
 				clienteRepository.saveAll(Arrays.asList(cli1));
 				chamadoRepository.saveAll(Arrays.asList(c1));
+				gestorRepository.saveAll(Arrays.asList(gest1));
+				
 		
 	}
 	
