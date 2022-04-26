@@ -1,5 +1,10 @@
 package com.tvSoftware.newton.services.exceptions;
 
+/*
+ * 
+ * Objeto não funciona 
+ * 
+ * */
 public class ObjectnotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
