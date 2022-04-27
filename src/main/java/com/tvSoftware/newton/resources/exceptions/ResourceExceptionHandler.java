@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.tvSoftware.newton.services.exceptions.DataIntegrityViolationException;
 import com.tvSoftware.newton.services.exceptions.ObjectnotFoundException;
 
 @ControllerAdvice
@@ -20,5 +21,16 @@ public class ResourceExceptionHandler {
 				"object Not Found", ex.getMessage(), request.getRequestURI());
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+	
+	//Exeção de CPF ja cadastrado no sistema
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex, 
+			HttpServletRequest request) {
+		
+		StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
+				"Violação de Dados", ex.getMessage(), request.getRequestURI());
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 }
