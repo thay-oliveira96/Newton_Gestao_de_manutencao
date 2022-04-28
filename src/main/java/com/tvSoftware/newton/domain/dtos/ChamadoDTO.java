@@ -3,6 +3,8 @@ package com.tvSoftware.newton.domain.dtos;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tvSoftware.newton.domain.Chamado;
 
@@ -14,12 +16,19 @@ public class ChamadoDTO implements Serializable {
 	private LocalDate dataAbertura = LocalDate.now();
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
+	@NotNull(message = "O Campo PRIORIDADE é requerido")
 	private Integer prioridade;
+	@NotNull(message = "O Campo STATUS é requerido")
 	private Integer status;
+	@NotNull(message = "O Campo TITULO é requerido")
 	private String titulo;
+	@NotNull(message = "O Campo OBSERVAÇÕES é requerido")
 	private String observacoes;
+	@NotNull(message = "O Campo TECNICO é requerido")
 	private Integer tecnico;
+	@NotNull(message = "O Campo CLIENTE é requerido")
 	private Integer cliente;
+	@NotNull(message = "O Campo GESTOR é requerido")
 	private Integer gestor;
 	private String nomeTecnico;
 	private String nomeCliente;
