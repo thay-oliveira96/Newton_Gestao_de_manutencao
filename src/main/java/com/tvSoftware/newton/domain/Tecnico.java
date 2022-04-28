@@ -34,6 +34,7 @@ public class Tecnico extends Pessoa {
 		addPerfil(Perfil.CLIENTE);
 	}
 	
+	//Metodo de transferencia de dados
 	public Tecnico(TecnicoDTO obj) {
 		super();
 		this.id = obj.getId();
