@@ -1,16 +1,8 @@
-package com.tvSoftware.newton.services.exceptions;
+package com.tvSoftware.newton.resources.exeptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tvSoftware.newton.resources.exceptions.FieldMessage;
-import com.tvSoftware.newton.resources.exceptions.StandardError;
-/*
- * 
- * Classe que auxilia na manipulação de exeção no caso exeção onde o usuario esquece de colocar o nome, email, 
- * senaha e etc.
- * 
- * */
 public class ValidationError extends StandardError {
 	private static final long serialVersionUID = 1L;
 

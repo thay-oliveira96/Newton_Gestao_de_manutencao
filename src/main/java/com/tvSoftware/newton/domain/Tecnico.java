@@ -11,17 +11,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tvSoftware.newton.domain.dtos.TecnicoDTO;
 import com.tvSoftware.newton.domain.enums.Perfil;
 
-
-/*
- * 	Classe tecnico
- * 	HErda os atributos da classe pessoa
- * 																							*/
 @Entity
 public class Tecnico extends Pessoa {
 	private static final long serialVersionUID = 1L;
-	
+
 	@JsonIgnore
-	@OneToMany(mappedBy = "tecnico") //O tecnico tem diversos chamados 
+	@OneToMany(mappedBy = "tecnico")
 	private List<Chamado> chamados = new ArrayList<>();
 
 	public Tecnico() {
@@ -34,7 +29,6 @@ public class Tecnico extends Pessoa {
 		addPerfil(Perfil.CLIENTE);
 	}
 	
-	//Metodo de transferencia de dados
 	public Tecnico(TecnicoDTO obj) {
 		super();
 		this.id = obj.getId();
@@ -53,7 +47,5 @@ public class Tecnico extends Pessoa {
 	public void setChamados(List<Chamado> chamados) {
 		this.chamados = chamados;
 	}
-	
-	
 
 }

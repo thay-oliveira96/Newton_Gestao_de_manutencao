@@ -2,7 +2,6 @@ package com.tvSoftware.newton.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,48 +13,48 @@ import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
-/*
- * Classe chamado tem o objetivo de herdar informação de outras classes, essa classe no sistema será
- * chamada de ordem de manutenção, onde essa logica tem o objetivo de abertura de ordens de manutenção
- * herdando informações de outras classes como, pessoa, maquinas, defeitos e etc.
- * */
-@Entity
 
+@Entity
 public class Chamado implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	//Data recupera o valor no momento da abertura
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataAbertura = LocalDate.now();
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
-	//Herda atributos do Enum prioridade
+
 	private Prioridade prioridade;
-	//herda atributos do Enum Status
 	private Status status;
 	private String titulo;
 	private String observacoes;
 	
-	@ManyToOne // Muitos para um
+	@ManyToOne
+	@JoinColumn(name = "maquina_id")
+	private Maquina maquina;
+
+	@ManyToOne
 	@JoinColumn(name = "tecnico_id")
 	private Tecnico tecnico;
-	
-	@ManyToOne // Muitos para um
+
+	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
-	@ManyToOne // Muitos para um
+	@ManyToOne
 	@JoinColumn(name = "gestor_id")
 	private Gestor gestor;
-	
+
+
 	public Chamado() {
 		super();
 	}
 
 	public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico,
-			Cliente cliente) {
+			Cliente cliente, Gestor gestor, Maquina maquina) {
 		super();
 		this.id = id;
 		this.prioridade = prioridade;
@@ -64,6 +63,8 @@ public class Chamado implements Serializable {
 		this.observacoes = observacoes;
 		this.tecnico = tecnico;
 		this.cliente = cliente;
+		this.gestor = gestor;
+		this.maquina = maquina;
 	}
 
 	public Integer getId() {
@@ -137,12 +138,31 @@ public class Chamado implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
+	
+	public Gestor getGestor() {
+		return gestor;
+	}
+
+	public void setGestor(Gestor gestor) {
+		this.gestor = gestor;
+	}
+	
+	public Maquina getMaquina() {
+		return maquina;
+	}
+
+	public void setMaquina(Maquina maquina) {
+		this.maquina = maquina;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
-	//compara ID da classe
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -152,8 +172,12 @@ public class Chamado implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Chamado other = (Chamado) obj;
-		return Objects.equals(id, other.id);
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-	
-	
+
 }

@@ -1,21 +1,16 @@
-package com.tvSoftware.newton.resources.exceptions;
+package com.tvSoftware.newton.resources.exeptions;
 
 import java.io.Serializable;
 
-/*
- * Trata a exessão e deixa o erro mais claro para o usuario
- * 
- * */
-
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long timestamp;
 	private Integer status;
 	private String error;
 	private String message;
 	private String path;
-	
+
 	public StandardError() {
 		super();
 	}
@@ -44,6 +39,7 @@ public class StandardError implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
 	public String getError() {
 		return error;
 	}
@@ -67,6 +63,5 @@ public class StandardError implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
+
 }

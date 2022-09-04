@@ -5,14 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.tvSoftware.newton.services.DBServices;
+import com.tvSoftware.newton.services.DBService;
 
 @Configuration
-@Profile("test")
-public class TesteConfig {
-	
+@Profile("teste")
+public class TestConfig {
+
 	@Autowired
-	private DBServices dbService;
+	private DBService dbService;
 	
 	@Bean
 	public void instanciaDB() {

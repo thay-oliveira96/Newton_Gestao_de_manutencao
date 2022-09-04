@@ -23,23 +23,18 @@ import com.tvSoftware.newton.domain.dtos.ClienteDTO;
 import com.tvSoftware.newton.services.ClienteService;
 
 @RestController
-@RequestMapping(value = "/clientes") // requisão HTTP do Cliente
+@RequestMapping(value = "/clientes")
 public class ClienteResource {
-
-	// private static final String objDTO = null;
-	// localhost:8080/tecnicos ou servername/tecnicos
 
 	@Autowired
 	private ClienteService service;
 
-	@GetMapping(value = "/{id}") // Busca por Id busca apenas um tecnico para seu id
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<ClienteDTO> findById(@PathVariable Integer id) {
 		Cliente obj = service.findById(id);
 		return ResponseEntity.ok().body(new ClienteDTO(obj));
 	}
 
-	// Retorna a lista de Cliente DTO
-	// Esse metodo sera chamado quando solocitar uma lista na URL sem parametro
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findAll() {
 		List<Cliente> list = service.findAll();
@@ -47,24 +42,22 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(listDTO);
 	}
 
-	// Comando Create criação de novos tecnicos
 	@PostMapping
-	public ResponseEntity<ClienteDTO> crate(@Valid @RequestBody ClienteDTO objDTO) {
+	public ResponseEntity<ClienteDTO> create(@Valid @RequestBody ClienteDTO objDTO) {
 		Cliente newObj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-
-	// Metodo Update do Cliente, atualização de cadastro
+	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @RequestBody ClienteDTO objDTO) {
+	public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @Valid @RequestBody ClienteDTO objDTO) {
 		Cliente obj = service.update(id, objDTO);
 		return ResponseEntity.ok().body(new ClienteDTO(obj));
 	}
-	//Deletando o tecnico
+	
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<ClienteDTO> delete(@PathVariable Integer id) {
-		service.delete(id);
+		service.delete(id); 
 		return ResponseEntity.noContent().build();
 	}
 

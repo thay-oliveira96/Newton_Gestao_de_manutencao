@@ -10,35 +10,38 @@ import com.tvSoftware.newton.domain.Chamado;
 
 public class ChamadoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Integer id;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataAbertura = LocalDate.now();
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
-	@NotNull(message = "O Campo PRIORIDADE é requerido")
+	@NotNull(message = "O campo PRIORIDADE é requerido")
 	private Integer prioridade;
-	@NotNull(message = "O Campo STATUS é requerido")
+	@NotNull(message = "O campo STATUS é requerido")
 	private Integer status;
-	@NotNull(message = "O Campo TITULO é requerido")
+	@NotNull(message = "O campo TITULO é requerido")
 	private String titulo;
-	@NotNull(message = "O Campo OBSERVAÇÕES é requerido")
+	@NotNull(message = "O campo OBSERVAÇÕES é requerido")
 	private String observacoes;
-	@NotNull(message = "O Campo TECNICO é requerido")
+	@NotNull(message = "O campo TECNICO é requerido")
 	private Integer tecnico;
-	@NotNull(message = "O Campo CLIENTE é requerido")
+	@NotNull(message = "O campo CLIENTE é requerido")
 	private Integer cliente;
-	@NotNull(message = "O Campo GESTOR é requerido")
+	@NotNull(message = "O campo Gestor é requerido")
 	private Integer gestor;
+	@NotNull(message = "O campo Maquina é requerido")
+	private Integer maquina;
 	private String nomeTecnico;
 	private String nomeCliente;
-	
+	private String nomeGestor;
+	private String nomeMaquina;
+
 	public ChamadoDTO() {
 		super();
 	}
 
 	public ChamadoDTO(Chamado obj) {
-		super();
 		this.id = obj.getId();
 		this.dataAbertura = obj.getDataAbertura();
 		this.dataFechamento = obj.getDataFechamento();
@@ -48,9 +51,11 @@ public class ChamadoDTO implements Serializable {
 		this.observacoes = obj.getObservacoes();
 		this.tecnico = obj.getTecnico().getId();
 		this.cliente = obj.getCliente().getId();
-		//this.gestor = obj.getGestor().getId();
-		this.nomeTecnico =obj.getTecnico().getNome();
+		this.maquina = obj.getMaquina().getId();
 		this.nomeCliente = obj.getCliente().getNome();
+		this.nomeTecnico = obj.getTecnico().getNome();
+		this.nomeGestor= obj.getGestor().getNome();
+		this.nomeMaquina = obj.getMaquina().getNome();
 	}
 
 	public Integer getId() {
@@ -124,13 +129,21 @@ public class ChamadoDTO implements Serializable {
 	public void setCliente(Integer cliente) {
 		this.cliente = cliente;
 	}
-
+	
 	public Integer getGestor() {
 		return gestor;
 	}
 
 	public void setGestor(Integer gestor) {
 		this.gestor = gestor;
+	}
+	
+	public Integer getMaquina() {
+		return maquina;
+	}
+
+	public void setMaquina(Integer maquina) {
+		this.maquina = maquina;
 	}
 
 	public String getNomeTecnico() {
@@ -149,7 +162,20 @@ public class ChamadoDTO implements Serializable {
 		this.nomeCliente = nomeCliente;
 	}
 	
+	public String getNomeGestor() {
+		return nomeGestor;
+	}
 	
+	public void setNomeGestor(String nomeGestor) {
+		this.nomeGestor = nomeGestor;
+	}
 	
+	public String getNomeMaquina() {
+		return nomeMaquina;
+	}
 	
+	public void setNomeMaquina(String nomeMaquina) {
+		this.nomeMaquina = nomeMaquina;
+	}
+
 }

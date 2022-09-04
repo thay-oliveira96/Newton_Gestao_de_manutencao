@@ -8,36 +8,37 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.tvSoftware.newton.domain.Cliente;
+import com.tvSoftware.newton.domain.Gestor;
 import com.tvSoftware.newton.domain.enums.Perfil;
-
-public class ClienteDTO implements Serializable {
+/*
+ * 
+ * Essa classe tem como objetivo filtrar o que será apresentado nas requisições
+ * 
+ * */
+public class GestorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	protected Integer id;
-	@NotNull(message = "O campo NOME é requerido")
+	@NotNull(message = "O campo Nome é Requerido")
 	protected String nome;
-	@NotNull(message = "O campo CPF é requerido")
-	@CPF
+	@NotNull(message = "O campo CPF é Requerido")
 	protected String cpf;
-	@NotNull(message = "O campo EMAIL é requerido")
+	@NotNull(message = "O campo E-mail é Requerido")
 	protected String email;
-	@NotNull(message = "O campo SENHA é requerido")
+	@NotNull(message = "O campo Senha é Requerido")
 	protected String senha;
 	protected Set<Integer> perfis = new HashSet<>();
-
+	
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	protected LocalDate dataCriacao = LocalDate.now();
+	protected LocalDate dataCricao = LocalDate.now();
 
-	public ClienteDTO() {
+	public GestorDTO() {
 		super();
-		addPerfil(Perfil.CLIENTE);
+		addPerfil(Perfil.GESTOR);
 	}
 
-	public ClienteDTO(Cliente obj) {
+	public GestorDTO(Gestor obj) {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
@@ -45,8 +46,8 @@ public class ClienteDTO implements Serializable {
 		this.email = obj.getEmail();
 		this.senha = obj.getSenha();
 		this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
-		this.dataCriacao = obj.getDataCriacao();
-		addPerfil(Perfil.CLIENTE);
+		this.dataCricao = obj.getDataCriacao();
+		addPerfil(Perfil.GESTOR);
 	}
 
 	public Integer getId() {
@@ -98,11 +99,12 @@ public class ClienteDTO implements Serializable {
 	}
 
 	public LocalDate getDataCriacao() {
-		return dataCriacao;
+		return dataCricao;
 	}
 
-	public void setDataCriacao(LocalDate dataCriacao) {
-		this.dataCriacao = dataCriacao;
+	public void setDataCriacao(LocalDate dataCricao) {
+		this.dataCricao = dataCricao;
 	}
-
+	
+	
 }

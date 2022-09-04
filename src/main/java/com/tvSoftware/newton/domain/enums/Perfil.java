@@ -1,40 +1,36 @@
 package com.tvSoftware.newton.domain.enums;
 
-
-/*
- * Esses enums tem o objetivo de controlar perfil de usuarios onde cria os niveis para o que o usuario
- * pode ou não fazer alterações
- * 
- * */
 public enum Perfil {
-	ADMIN(0, "ROLE_ADMIN"), CLIENTE(1, "ROLE_CLIENTE"), TECNICO(2, "ROLE_TECNICO"), GESTOR(3, "ROLE_GESTOR");
+
+	ADMIN(0, "ROLE_ADMIN"), CLIENTE(1, "ROLE_CLIENTE"), TECNICO(2, "ROLE_TECNICO"), GESTOR(3, "ROLE_ADMIN");
 	
 	private Integer codigo;
-	private String descrição;
+	private String descricao;
 	
-	private Perfil(Integer codigo, String descrição) {
+	private Perfil(Integer codigo, String descricao) {
 		this.codigo = codigo;
-		this.descrição = descrição;
+		this.descricao = descricao;
 	}
 
 	public Integer getCodigo() {
 		return codigo;
 	}
 
-	public String getDescrição() {
-		return descrição;
+	public String getDescricao() {
+		return descricao;
 	}
 	
 	public static Perfil toEnum(Integer cod) {
 		if(cod == null) {
 			return null;
 		}
+		
 		for(Perfil x : Perfil.values()) {
 			if(cod.equals(x.getCodigo())) {
 				return x;
 			}
 		}
-		throw new IllegalArgumentException("Perfil invalido");
+		
+		throw new IllegalArgumentException("Perfil inválido");
 	}
-	
 }

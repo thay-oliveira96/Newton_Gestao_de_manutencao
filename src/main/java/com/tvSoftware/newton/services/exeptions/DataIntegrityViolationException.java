@@ -1,11 +1,5 @@
-package com.tvSoftware.newton.services.exceptions;
+package com.tvSoftware.newton.services.exeptions;
 
-/*
- * 
- * Objeto não funciona 
- * Constroi uma excessão de CPF ja cadastrado no sistema
- * 
- * */
 public class DataIntegrityViolationException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
@@ -16,6 +10,5 @@ public class DataIntegrityViolationException extends RuntimeException {
 	public DataIntegrityViolationException(String message) {
 		super(message);
 	}
-	
-	
+
 }

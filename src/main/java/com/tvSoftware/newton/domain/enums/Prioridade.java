@@ -1,40 +1,36 @@
 package com.tvSoftware.newton.domain.enums;
 
-
-/*
- * Enum de prioridade mostra a prioridade que esse tipo de usuario tem para concetar ao banco
- * 
- * */
-
 public enum Prioridade {
+
 	BAIXA(0, "BAIXA"), MEDIA(1, "MEDIA"), ALTA(2, "ALTA");
 	
 	private Integer codigo;
-	private String descrição;
+	private String descricao;
 	
-	private Prioridade(Integer codigo, String descrição) {
+	private Prioridade(Integer codigo, String descricao) {
 		this.codigo = codigo;
-		this.descrição = descrição;
+		this.descricao = descricao;
 	}
 
 	public Integer getCodigo() {
 		return codigo;
 	}
 
-	public String getDescrição() {
-		return descrição;
+	public String getDescricao() {
+		return descricao;
 	}
 	
 	public static Prioridade toEnum(Integer cod) {
 		if(cod == null) {
 			return null;
 		}
+		
 		for(Prioridade x : Prioridade.values()) {
 			if(cod.equals(x.getCodigo())) {
 				return x;
 			}
 		}
-		throw new IllegalArgumentException("Prioridade invalido");
+		
+		throw new IllegalArgumentException("Prioridade inválida");
 	}
-	
 }

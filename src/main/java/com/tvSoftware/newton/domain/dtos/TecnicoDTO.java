@@ -8,30 +8,29 @@ import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tvSoftware.newton.domain.Tecnico;
 import com.tvSoftware.newton.domain.enums.Perfil;
-/*
- * 
- * Essa classe tem como objetivo filtrar o que será apresentado nas requisições
- * 
- * */
+
 public class TecnicoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	protected Integer id;
-	@NotNull(message = "O campo Nome é Requerido")
+	@NotNull(message = "O campo NOME é requerido")
 	protected String nome;
-	@NotNull(message = "O campo CPF é Requerido")
+	@NotNull(message = "O campo CPF é requerido")
+	@CPF
 	protected String cpf;
-	@NotNull(message = "O campo E-mail é Requerido")
+	@NotNull(message = "O campo EMAIL é requerido")
 	protected String email;
-	@NotNull(message = "O campo Senha é Requerido")
+	@NotNull(message = "O campo SENHA é requerido")
 	protected String senha;
 	protected Set<Integer> perfis = new HashSet<>();
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
-	protected LocalDate dataCricao = LocalDate.now();
+	protected LocalDate dataCriacao = LocalDate.now();
 
 	public TecnicoDTO() {
 		super();
@@ -46,7 +45,7 @@ public class TecnicoDTO implements Serializable {
 		this.email = obj.getEmail();
 		this.senha = obj.getSenha();
 		this.perfis = obj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
-		this.dataCricao = obj.getDataCriacao();
+		this.dataCriacao = obj.getDataCriacao();
 		addPerfil(Perfil.CLIENTE);
 	}
 
@@ -99,12 +98,11 @@ public class TecnicoDTO implements Serializable {
 	}
 
 	public LocalDate getDataCriacao() {
-		return dataCricao;
+		return dataCriacao;
 	}
 
-	public void setDataCriacao(LocalDate dataCricao) {
-		this.dataCricao = dataCricao;
+	public void setDataCriacao(LocalDate dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
-	
-	
+
 }

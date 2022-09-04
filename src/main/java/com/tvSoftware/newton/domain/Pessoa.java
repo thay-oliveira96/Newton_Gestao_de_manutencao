@@ -3,7 +3,6 @@ package com.tvSoftware.newton.domain;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -16,46 +15,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.br.CPF;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tvSoftware.newton.domain.enums.Perfil;
-/*
- * O Obejto pessoa tem como objetivo Cadastrar pesssoas no banco de dados ele também recebera informações
- * de outras classe com Cliente, Tecnico, Gestor e administrador
- * */
 
-//Entity apresenta como entidade e cria a tabela de banco de dados com o nome pessoa
 @Entity
 public abstract class Pessoa implements Serializable {
 	private static final long serialVersionUID = 1L;
-	//Utilizando o protect, pois esses atributos não podem ficar publicos, somente recebera das classes herdadas
-	@Id //utiliza para dizer que o atributo ID abaixo é uma chave primaria
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // Especifica quem vai gerar o ID é o banco ou seja para cada objeto o banco vai gerar um ID diferente
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
 	protected String nome;
 	
-	@CPF
-	@Column(unique = true) // Especifica que a coluna CPF é unica no banco, não vai existir outra coluna com o mesmo valor
+	@Column(unique = true)
 	protected String cpf;
-	@Column(unique = true) // Especifica que a coluna E-mail é unica no banco, não vai existir outra coluna com o mesmo valor
+	
+	@Column(unique = true)
 	protected String email;
 	protected String senha;
 	
-	@ElementCollection(fetch = FetchType.EAGER) //Lista usuarios do bd, quando der um get tras a lista com o usuário
-	@CollectionTable(name = "PERFIS") //Cria Coleção de tabela somente com os perfis.
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "PERFIS")
 	protected Set<Integer> perfis = new HashSet<>();
 	
-	@JsonFormat(pattern = "dd/MM/yyyy") //formata o horario para o padrão especificado
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now();
-	
-	//Metodo construtor!
+
 	public Pessoa() {
 		super();
 		addPerfil(Perfil.CLIENTE);
-		
 	}
-	// Super Classe pessoa, recebe variaveis
+
 	public Pessoa(Integer id, String nome, String cpf, String email, String senha) {
 		super();
 		this.id = id;
@@ -124,7 +114,11 @@ public abstract class Pessoa implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(cpf, id);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override
@@ -136,9 +130,17 @@ public abstract class Pessoa implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pessoa other = (Pessoa) obj;
-		return Objects.equals(cpf, other.cpf) && Objects.equals(id, other.id);
+		if (cpf == null) {
+			if (other.cpf != null)
+				return false;
+		} else if (!cpf.equals(other.cpf))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
-	
-	
 
 }
