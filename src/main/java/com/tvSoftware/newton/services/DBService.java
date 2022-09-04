@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tvSoftware.newton.domain.Chamado;
 import com.tvSoftware.newton.domain.Cliente;
+import com.tvSoftware.newton.domain.Departamentos;
 import com.tvSoftware.newton.domain.Gestor;
 import com.tvSoftware.newton.domain.Maquina;
 import com.tvSoftware.newton.domain.Tecnico;
@@ -15,6 +16,7 @@ import com.tvSoftware.newton.domain.enums.Perfil;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
 import com.tvSoftware.newton.repositories.ChamadoRepository;
+import com.tvSoftware.newton.repositories.DepartamentosRepository;
 import com.tvSoftware.newton.repositories.MaquinaRepository;
 import com.tvSoftware.newton.repositories.PessoaRepository;
 
@@ -27,6 +29,8 @@ public class DBService {
 	private PessoaRepository pessoaRepository;
 	@Autowired
 	private MaquinaRepository maquinaRepository;
+	@Autowired
+	private DepartamentosRepository departamentoRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
@@ -47,7 +51,9 @@ public class DBService {
 		
 		Gestor gest1 = new Gestor(null, "Douglas Oliveira", "683.597.666-73", "douglas.oliveira@mail.com", encoder.encode("123"));
 		
-		Maquina m1 = new Maquina(null, "maquina 3", "Produção", "Maquina da fabricacao geral");
+		Departamentos dpto1 = new Departamentos(null, "Producao");
+		
+		Maquina m1 = new Maquina(null, "maquina 3", dpto1, "Maquina da fabricacao geral");
  
 		Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado 1", "Teste chamado 1", tec1, cli1, gest1, m1);
 		Chamado c2 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, "Chamado 2", "Teste chamado 2", tec1, cli2, gest1, m1);
@@ -58,6 +64,7 @@ public class DBService {
 		
 
 		pessoaRepository.saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5, cli1, cli2, cli3, cli4, cli5, gest1));
+		departamentoRepository.saveAll(Arrays.asList(dpto1));
 		maquinaRepository.saveAll(Arrays.asList(m1));
 		chamadoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
 	}

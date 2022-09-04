@@ -10,19 +10,21 @@ public class MaquinaDTO implements Serializable {
 	private Integer id;
 	
 	private String nome;
-	private String departamento;
+	private Integer departamento;
 	private String observacoes;
+	private String nomeDepartamento;
+	
+	public MaquinaDTO() {
+		super();
+	}
 	
 	public MaquinaDTO(Maquina obj) {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
-		this.departamento = obj.getDepartamento();
+		this.departamento = obj.getDepartamento().getId();
 		this.observacoes = obj.getObservacoes();
-	}
-	
-	public MaquinaDTO() {
-		super();
+		this.nomeDepartamento = obj.getDepartamento().getNome();
 	}
 
 	public Integer getId() {
@@ -41,11 +43,11 @@ public class MaquinaDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getDepartamento() {
+	public Integer getDepartamento() {
 		return departamento;
 	}
 
-	public void setDepartamento(String departamento) {
+	public void setDepartamento(Integer departamento) {
 		this.departamento = departamento;
 	}
 
@@ -55,6 +57,14 @@ public class MaquinaDTO implements Serializable {
 
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
+	}
+	
+	public String getNomeDepartamento() {
+		return nomeDepartamento;
+	}
+
+	public void setNomeDepartamento(String nomeDepartamento) {
+		this.nomeDepartamento = nomeDepartamento;
 	}
 
 }

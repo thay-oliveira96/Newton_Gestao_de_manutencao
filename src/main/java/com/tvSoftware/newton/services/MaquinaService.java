@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tvSoftware.newton.domain.Chamado;
+import com.tvSoftware.newton.domain.Departamentos;
 import com.tvSoftware.newton.domain.Maquina;
 import com.tvSoftware.newton.domain.dtos.MaquinaDTO;
 import com.tvSoftware.newton.repositories.MaquinaRepository;
@@ -19,6 +21,8 @@ public class MaquinaService {
 
 	@Autowired
 	private MaquinaRepository repository;
+	@Autowired
+	private DepartamentoService departamentoService;
 
 	public Maquina findById(Integer id) {
 		Optional<Maquina> obj = repository.findById(id);
@@ -32,15 +36,13 @@ public class MaquinaService {
 	public Maquina create(MaquinaDTO objDTO) {
 		objDTO.setId(null);
 		validaNome(objDTO);
-		Maquina newObj = new Maquina(objDTO);
-		return repository.save(newObj);
+		return repository.save(newMaquina(objDTO));
 	}
  
 	public Maquina update(Integer id, @Valid MaquinaDTO objDTO) {
 		objDTO.setId(id);
 		Maquina oldObj = findById(id);
-		
-		oldObj = new Maquina(objDTO);
+		oldObj = newMaquina(objDTO);
 		return repository.save(oldObj);
 	}
 
@@ -49,6 +51,18 @@ public class MaquinaService {
 
 		
 		repository.deleteById(id);
+	}
+	
+	private Maquina newMaquina(MaquinaDTO obj) {
+		Departamentos departamentos = departamentoService.findById(obj.getDepartamento());
+		Maquina maquina = new Maquina();
+		if(obj.getId() != null) {
+			maquina.setId(obj.getId());
+		}
+		maquina.setNome(obj.getNome());
+		maquina.setObservacoes(obj.getObservacoes());
+		maquina.setDepartamento(departamentos);
+		return maquina;
 	}
 
 	private void validaNome(MaquinaDTO objDTO) {

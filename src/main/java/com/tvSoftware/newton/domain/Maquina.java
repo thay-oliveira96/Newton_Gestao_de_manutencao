@@ -7,8 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
-import com.tvSoftware.newton.domain.dtos.MaquinaDTO;
 
 @Entity
 public class Maquina implements Serializable {
@@ -19,19 +20,22 @@ public class Maquina implements Serializable {
 	private Integer id;
 	
 	private String nome;
-	private String departamento;
+	
+	@ManyToOne
+	@JoinColumn(name = "dptos_id")
+	private Departamentos departamento;
+	
 	private String observacoes;
 	
 	public Maquina() {
 		super();
 	}
-	
-	public Maquina(MaquinaDTO maquinaDTO) {
-		 this(maquinaDTO.getId(), maquinaDTO.getNome(), maquinaDTO.getDepartamento(),
+	/*public Maquina(MaquinaDTO maquinaDTO, DepartamentosDTO departamentosDTO) {
+		 this(maquinaDTO.getId(), maquinaDTO.getNome(), departamentosDTO,
 				 maquinaDTO.getObservacoes());
-		}
+	}*/
 	
-	public Maquina(Integer id, String nome, String departamento, String observacoes) {
+	public Maquina(Integer id, String nome, Departamentos departamento, String observacoes) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -55,11 +59,11 @@ public class Maquina implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getDepartamento() {
+	public Departamentos getDepartamento() {
 		return departamento;
 	}
 
-	public void setDepartamento(String departamento) {
+	public void setDepartamento(Departamentos departamento) {
 		this.departamento = departamento;
 	}
 
