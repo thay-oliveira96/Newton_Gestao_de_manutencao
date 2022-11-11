@@ -3,6 +3,8 @@ package com.tvSoftware.newton.security;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -48,7 +50,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication authResult) throws IOException, ServletException {
 		
 		String username = ((UserSS) authResult.getPrincipal()).getUsername();
-		String token = jwtUtil.generateToken(username);
+		List<String> authorities = ((UserSS) authResult.getPrincipal()).getAuthorities()
+				.stream().map(String::valueOf).collect(Collectors.toList());
+		
+		//Collection<GrantedAuthority> roles = (Collection<GrantedAuthority>) ((UserSS) authResult.getPrincipal()).getAuthorities();
+		
+		
+		String token = jwtUtil.generateToken(username, authorities);
 		response.setHeader("access-control-expose-headers", "Authorization");
 		response.setHeader("Authorization", "Bearer " + token);
 	}

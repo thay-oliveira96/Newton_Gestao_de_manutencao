@@ -15,7 +15,7 @@ public enum Perfil {
 	public Integer getCodigo() {
 		return codigo;
 	}
-
+	
 	public String getDescricao() {
 		return descricao;
 	}

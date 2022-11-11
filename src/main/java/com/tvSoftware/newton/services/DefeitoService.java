@@ -45,8 +45,6 @@ public class DefeitoService {
 	}
 
 	public void delete(Integer id) {
-		Defeitos obj = findById(id);
-
 		repository.deleteById(id);
 	}
 

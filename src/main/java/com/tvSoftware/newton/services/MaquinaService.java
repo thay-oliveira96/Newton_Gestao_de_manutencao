@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tvSoftware.newton.domain.Chamado;
 import com.tvSoftware.newton.domain.Departamentos;
 import com.tvSoftware.newton.domain.Maquina;
 import com.tvSoftware.newton.domain.dtos.MaquinaDTO;
@@ -28,7 +27,7 @@ public class MaquinaService {
 		Optional<Maquina> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! Id: " + id));
 	}
-
+	
 	public List<Maquina> findAll() {
 		return repository.findAll();
 	}
@@ -47,9 +46,6 @@ public class MaquinaService {
 	}
 
 	public void delete(Integer id) {
-		Maquina obj = findById(id);
-
-		
 		repository.deleteById(id);
 	}
 	
@@ -64,7 +60,7 @@ public class MaquinaService {
 		maquina.setDepartamento(departamentos);
 		return maquina;
 	}
-
+	
 	private void validaNome(MaquinaDTO objDTO) {
 		Optional<Maquina> obj = repository.findByNome(objDTO.getNome());
 		if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {

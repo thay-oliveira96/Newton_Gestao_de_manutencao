@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.tvSoftware.newton.domain.Chamado;
 import com.tvSoftware.newton.domain.Cliente;
+import com.tvSoftware.newton.domain.Defeitos;
 import com.tvSoftware.newton.domain.Gestor;
+import com.tvSoftware.newton.domain.Maquina;
 import com.tvSoftware.newton.domain.Tecnico;
 import com.tvSoftware.newton.domain.dtos.ChamadoDTO;
 import com.tvSoftware.newton.domain.enums.Prioridade;
@@ -30,6 +32,12 @@ public class ChamadoService {
 	private ClienteService clienteService;
 	@Autowired
 	private GestorService gestorService;
+	@Autowired
+	private DefeitoService defeitoService;
+	@Autowired
+	private MaquinaService maquinaService;
+	
+	EmailService emailService = new EmailService();
 
 	public Chamado findById(Integer id) {
 		Optional<Chamado> obj = repository.findById(id);
@@ -41,7 +49,14 @@ public class ChamadoService {
 	}
 
 	public Chamado create(ChamadoDTO obj) {
-		return repository.save(newChamado(obj));
+		Chamado chamado = repository.save(newChamado(obj));
+		Chamado chamadoEmail = new Chamado();
+		chamadoEmail.setId(chamado.getId());
+		chamadoEmail.setPrioridade(chamado.getPrioridade());
+		chamadoEmail.setStatus(chamado.getStatus());
+		chamadoEmail.setDataAbertura(chamado.getDataAbertura());
+		emailService.enviar(chamadoEmail, "thaynanrodrigues96@gmail.com");
+		return chamado;
 	}
 
 	public Chamado update(Integer id, @Valid ChamadoDTO objDTO) {
@@ -55,6 +70,8 @@ public class ChamadoService {
 		Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
 		Cliente cliente = clienteService.findById(obj.getCliente());
 		Gestor gestor = gestorService.findById(obj.getGestor());
+		Defeitos defeitos = defeitoService.findById(obj.getDefeitos());
+		Maquina maquina = maquinaService.findById(obj.getMaquina());
 		
 		Chamado chamado = new Chamado();
 		if(obj.getId() != null) {
@@ -65,13 +82,19 @@ public class ChamadoService {
 			chamado.setDataFechamento(LocalDate.now());
 		}
 		
+		
 		chamado.setTecnico(tecnico);
 		chamado.setCliente(cliente);
 		chamado.setGestor(gestor);
+		chamado.setMaquina(maquina);
 		chamado.setPrioridade(Prioridade.toEnum(obj.getPrioridade()));
 		chamado.setStatus(Status.toEnum(obj.getStatus()));
-		chamado.setTitulo(obj.getTitulo());
+		chamado.setTipoManutencao(obj.getTipoManutencao());
+		chamado.setCategoriaManutencao(obj.getCategoriaManutencao());
+		chamado.setDefeitos(defeitos);
 		chamado.setObservacoes(obj.getObservacoes());
+		chamado.setObsTec(obj.getObsTec());
+		
 		return chamado;
 	}
 

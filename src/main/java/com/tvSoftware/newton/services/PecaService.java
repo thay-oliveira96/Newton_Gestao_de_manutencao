@@ -8,39 +8,39 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tvSoftware.newton.domain.Departamentos;
-import com.tvSoftware.newton.domain.dtos.DepartamentosDTO;
-import com.tvSoftware.newton.repositories.DepartamentosRepository;
+import com.tvSoftware.newton.domain.Pecas;
+import com.tvSoftware.newton.domain.dtos.PecasDTO;
+import com.tvSoftware.newton.repositories.PecasRepository;
 import com.tvSoftware.newton.services.exeptions.DataIntegrityViolationException;
 import com.tvSoftware.newton.services.exeptions.ObjectnotFoundException;
 
 @Service
-public class DepartamentoService {
+public class PecaService {
 
 	@Autowired
-	private DepartamentosRepository repository;
+	private PecasRepository repository;
 
-	public Departamentos findById(Integer id) {
-		Optional<Departamentos> obj = repository.findById(id);
+	public Pecas findById(Integer id) {
+		Optional<Pecas> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! Id: " + id));
 	}
 
-	public List<Departamentos> findAll() {
+	public List<Pecas> findAll() {
 		return repository.findAll();
 	}
 
-	public Departamentos create(DepartamentosDTO objDTO) {
+	public Pecas create(PecasDTO objDTO) {
 		objDTO.setId(null);
 		validaNome(objDTO);
-		Departamentos newObj = new Departamentos(objDTO);
+		Pecas newObj = new Pecas(objDTO);
 		return repository.save(newObj);
 	}
  
-	public Departamentos update(Integer id, @Valid DepartamentosDTO objDTO) {
+	public Pecas update(Integer id, @Valid PecasDTO objDTO) {
 		objDTO.setId(id);
-		Departamentos oldObj = findById(id);
+		Pecas oldObj = findById(id);
 		
-		oldObj = new Departamentos(objDTO);
+		oldObj = new Pecas(objDTO);
 		return repository.save(oldObj);
 	}
 
@@ -48,8 +48,8 @@ public class DepartamentoService {
 		repository.deleteById(id);
 	}
 
-	private void validaNome(DepartamentosDTO objDTO) {
-		Optional<Departamentos> obj = repository.findByNome(objDTO.getNome());
+	private void validaNome(PecasDTO objDTO) {
+		Optional<Pecas> obj = repository.findByNome(objDTO.getNome());
 		if (obj.isPresent() && obj.get().getId() != objDTO.getId()) {
 			throw new DataIntegrityViolationException("Há um departamento com esse mesmo nome já cadastrado!");
 		}

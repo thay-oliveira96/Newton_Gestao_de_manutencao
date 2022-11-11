@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,8 +13,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tvSoftware.newton.domain.enums.CategoriaManutencao;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
+import com.tvSoftware.newton.domain.enums.TipoManutencao;
 
 @Entity
 public class Chamado implements Serializable {
@@ -26,11 +30,22 @@ public class Chamado implements Serializable {
 	private LocalDate dataAbertura = LocalDate.now();
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
-
+	
 	private Prioridade prioridade;
+	
 	private Status status;
-	private String titulo;
+	
+	@Enumerated(EnumType.STRING)
+	private TipoManutencao tipoManutencao;
+	@Enumerated(EnumType.STRING)
+	private CategoriaManutencao categoriaManutencao;
+	
+	@ManyToOne
+	@JoinColumn(name = "defeitos_id")
+	private Defeitos defeitos;
+	
 	private String observacoes;
+	private String obsTec;
 	
 	@ManyToOne
 	@JoinColumn(name = "maquina_id")
@@ -53,19 +68,26 @@ public class Chamado implements Serializable {
 		super();
 	}
 
-	public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico,
+	public Chamado(Integer id, Prioridade prioridade, Status status,
+			TipoManutencao tipoManutencao, CategoriaManutencao categoriaManutencao, 
+			Defeitos defeitos, String observacoes, String obsTec, Tecnico tecnico,
 			Cliente cliente, Gestor gestor, Maquina maquina) {
 		super();
 		this.id = id;
 		this.prioridade = prioridade;
 		this.status = status;
-		this.titulo = titulo;
+		this.tipoManutencao = tipoManutencao;
+		this.categoriaManutencao = categoriaManutencao;
+		this.defeitos = defeitos;
 		this.observacoes = observacoes;
+		this.obsTec = obsTec;
 		this.tecnico = tecnico;
 		this.cliente = cliente;
 		this.gestor = gestor;
 		this.maquina = maquina;
 	}
+
+	
 
 	public Integer getId() {
 		return id;
@@ -107,12 +129,28 @@ public class Chamado implements Serializable {
 		this.status = status;
 	}
 
-	public String getTitulo() {
-		return titulo;
+	public TipoManutencao getTipoManutencao() {
+		return tipoManutencao;
 	}
 
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
+	public void setTipoManutencao(TipoManutencao tipoManutencao) {
+		this.tipoManutencao = tipoManutencao;
+	}
+
+	public CategoriaManutencao getCategoriaManutencao() {
+		return categoriaManutencao;
+	}
+
+	public void setCategoriaManutencao(CategoriaManutencao categoriaManutencao) {
+		this.categoriaManutencao = categoriaManutencao;
+	}
+
+	public Defeitos getDefeitos() {
+		return defeitos;
+	}
+
+	public void setDefeitos(Defeitos defeitos) {
+		this.defeitos = defeitos;
 	}
 
 	public String getObservacoes() {
@@ -121,6 +159,22 @@ public class Chamado implements Serializable {
 
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
+	}
+
+	public String getObsTec() {
+		return obsTec;
+	}
+
+	public void setObsTec(String obsTec) {
+		this.obsTec = obsTec;
+	}
+
+	public Maquina getMaquina() {
+		return maquina;
+	}
+
+	public void setMaquina(Maquina maquina) {
+		this.maquina = maquina;
 	}
 
 	public Tecnico getTecnico() {
@@ -138,21 +192,13 @@ public class Chamado implements Serializable {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public Gestor getGestor() {
 		return gestor;
 	}
 
 	public void setGestor(Gestor gestor) {
 		this.gestor = gestor;
-	}
-	
-	public Maquina getMaquina() {
-		return maquina;
-	}
-
-	public void setMaquina(Maquina maquina) {
-		this.maquina = maquina;
 	}
 
 	@Override

@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service;
 
 import com.tvSoftware.newton.domain.Chamado;
 import com.tvSoftware.newton.domain.Cliente;
+import com.tvSoftware.newton.domain.Defeitos;
 import com.tvSoftware.newton.domain.Departamentos;
 import com.tvSoftware.newton.domain.Gestor;
 import com.tvSoftware.newton.domain.Maquina;
 import com.tvSoftware.newton.domain.Tecnico;
+import com.tvSoftware.newton.domain.enums.CategoriaManutencao;
 import com.tvSoftware.newton.domain.enums.Perfil;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
+import com.tvSoftware.newton.domain.enums.TipoManutencao;
 import com.tvSoftware.newton.repositories.ChamadoRepository;
+import com.tvSoftware.newton.repositories.DefeitosRepository;
 import com.tvSoftware.newton.repositories.DepartamentosRepository;
 import com.tvSoftware.newton.repositories.MaquinaRepository;
 import com.tvSoftware.newton.repositories.PessoaRepository;
@@ -31,6 +35,8 @@ public class DBService {
 	private MaquinaRepository maquinaRepository;
 	@Autowired
 	private DepartamentosRepository departamentoRepository;
+	@Autowired
+	private DefeitosRepository defeitosRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
@@ -50,20 +56,23 @@ public class DBService {
 		Cliente cli5 = new Cliente(null, "Max Planck", "081.399.300-83", "planck@mail.com", encoder.encode("123"));
 		
 		Gestor gest1 = new Gestor(null, "Douglas Oliveira", "683.597.666-73", "douglas.oliveira@mail.com", encoder.encode("123"));
-		
+		gest1.addPerfil(Perfil.ADMIN);
 		Departamentos dpto1 = new Departamentos(null, "Producao");
+		
+		Defeitos d1 = new Defeitos(null, "Quebra de corrente");
 		
 		Maquina m1 = new Maquina(null, "maquina 3", dpto1, "Maquina da fabricacao geral");
  
-		Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado 1", "Teste chamado 1", tec1, cli1, gest1, m1);
-		Chamado c2 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, "Chamado 2", "Teste chamado 2", tec1, cli2, gest1, m1);
-		Chamado c3 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado 3", "Teste chamado 3", tec2, cli3, gest1, m1);
-		Chamado c4 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, "Chamado 4", "Teste chamado 4", tec3, cli3, gest1, m1);
-		Chamado c5 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado 5", "Teste chamado 5", tec2, cli1, gest1, m1);
-		Chamado c6 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado 7", "Teste chamado 6", tec1, cli5, gest1, m1);
+		Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 1", "jssk", tec1, cli1, gest1, m1);
+		Chamado c2 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 2", "jssk",tec1, cli2, gest1, m1);
+		Chamado c3 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 3", "jssk",tec2, cli3, gest1, m1);
+		Chamado c4 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 4", "jssk", tec3, cli3, gest1, m1);
+		Chamado c5 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 5", "jssk", tec2, cli1, gest1, m1);
+		Chamado c6 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 6", "jssk", tec1, cli5, gest1, m1);
 		
 
 		pessoaRepository.saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5, cli1, cli2, cli3, cli4, cli5, gest1));
+		defeitosRepository.saveAll(Arrays.asList(d1));
 		departamentoRepository.saveAll(Arrays.asList(dpto1));
 		maquinaRepository.saveAll(Arrays.asList(m1));
 		chamadoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
