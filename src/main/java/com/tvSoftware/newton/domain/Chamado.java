@@ -46,6 +46,7 @@ public class Chamado implements Serializable {
 	
 	private String observacoes;
 	private String obsTec;
+	private String horaParada;
 	
 	@ManyToOne
 	@JoinColumn(name = "maquina_id")
@@ -62,6 +63,8 @@ public class Chamado implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "gestor_id")
 	private Gestor gestor;
+	
+	private String parada;
 
 
 	public Chamado() {
@@ -71,7 +74,7 @@ public class Chamado implements Serializable {
 	public Chamado(Integer id, Prioridade prioridade, Status status,
 			TipoManutencao tipoManutencao, CategoriaManutencao categoriaManutencao, 
 			Defeitos defeitos, String observacoes, String obsTec, Tecnico tecnico,
-			Cliente cliente, Gestor gestor, Maquina maquina) {
+			Cliente cliente, Gestor gestor, Maquina maquina, String parada, String horaParada) {
 		super();
 		this.id = id;
 		this.prioridade = prioridade;
@@ -85,6 +88,8 @@ public class Chamado implements Serializable {
 		this.cliente = cliente;
 		this.gestor = gestor;
 		this.maquina = maquina;
+		this.parada = parada;
+		this.horaParada = horaParada;
 	}
 
 	
@@ -199,6 +204,22 @@ public class Chamado implements Serializable {
 
 	public void setGestor(Gestor gestor) {
 		this.gestor = gestor;
+	}
+
+	public String getParada() {
+		return parada;
+	}
+
+	public void setParada(String parada) {
+		this.parada = parada;
+	}
+	
+	public String getHoraParada() {
+		return horaParada;
+	}
+
+	public void setHoraParada(String horaParada) {
+		this.horaParada = horaParada;
 	}
 
 	@Override

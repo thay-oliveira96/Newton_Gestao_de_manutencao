@@ -18,25 +18,25 @@ public class ChamadoDTO implements Serializable {
 	private LocalDate dataAbertura = LocalDate.now();
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataFechamento;
-	@NotNull(message = "O campo PRIORIDADE é requerido")
+	//@NotNull(message = "O campo PRIORIDADE é requerido")
 	private Integer prioridade;
-	@NotNull(message = "O campo STATUS é requerido")
+	//@NotNull(message = "O campo STATUS é requerido")
 	private Integer status;
-	@NotNull(message = "O campo Tipo de Manutencao é requerido")
+	//@NotNull(message = "O campo Tipo de Manutencao é requerido")
 	private TipoManutencao tipoManutencao;
-	@NotNull(message = "O campo Categoria de Manutenção é requerido")
+	//@NotNull(message = "O campo Categoria de Manutenção é requerido")
 	private CategoriaManutencao categoriaManutencao;
 	@NotNull(message = "O campo TITULO é requerido")
 	private Integer defeitos;
 	@NotNull(message = "O campo OBSERVAÇÕES é requerido")
 	private String observacoes;
-	@NotNull(message = "O campo OBSERVAÇÃO DO TECNICO é requerido")
+	//@NotNull(message = "O campo OBSERVAÇÃO DO TECNICO é requerido")
 	private String obsTec;
-	@NotNull(message = "O campo TECNICO é requerido")
+	//@NotNull(message = "O campo TECNICO é requerido")
 	private Integer tecnico;
 	@NotNull(message = "O campo CLIENTE é requerido")
 	private Integer cliente;
-	@NotNull(message = "O campo Gestor é requerido")
+	//@NotNull(message = "O campo Gestor é requerido")
 	private Integer gestor;
 	@NotNull(message = "O campo Maquina é requerido")
 	private Integer maquina;
@@ -45,6 +45,9 @@ public class ChamadoDTO implements Serializable {
 	private String nomeGestor;
 	private String nomeMaquina;
 	private String nomeDefeitos;
+	@NotNull(message = "Informe se a maquina está parada")
+	private String parada;
+	private String horaParada;
 
 	public ChamadoDTO() {
 		super();
@@ -69,6 +72,8 @@ public class ChamadoDTO implements Serializable {
 		this.nomeGestor= obj.getGestor().getNome();
 		this.nomeMaquina = obj.getMaquina().getNome();
 		this.nomeDefeitos = obj.getDefeitos().getDescricao();
+		this.parada = obj.getParada();
+		this.horaParada = obj.getHoraParada();
 	}
 
 	public Integer getId() {
@@ -222,5 +227,25 @@ public class ChamadoDTO implements Serializable {
 	public void setNomeDefeitos(String nomeDefeitos) {
 		this.nomeDefeitos = nomeDefeitos;
 	}
+
+	public String getParada() {
+		return parada;
+	}
+
+	public void setParada(String parada) {
+		this.parada = parada;
+	}
+
+	public String getHoraParada() {
+		return horaParada;
+	}
+
+	public void setHoraParada(String horaParada) {
+		this.horaParada = horaParada;
+	}
+	
+	
+	
+	
 
 }

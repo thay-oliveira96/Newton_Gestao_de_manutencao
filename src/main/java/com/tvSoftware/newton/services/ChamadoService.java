@@ -52,10 +52,12 @@ public class ChamadoService {
 		Chamado chamado = repository.save(newChamado(obj));
 		Chamado chamadoEmail = new Chamado();
 		chamadoEmail.setId(chamado.getId());
-		chamadoEmail.setPrioridade(chamado.getPrioridade());
-		chamadoEmail.setStatus(chamado.getStatus());
 		chamadoEmail.setDataAbertura(chamado.getDataAbertura());
-		emailService.enviar(chamadoEmail, "thaynanrodrigues96@gmail.com");
+		chamadoEmail.setCategoriaManutencao(chamado.getCategoriaManutencao());
+		chamadoEmail.setDefeitos(chamado.getDefeitos());
+		chamadoEmail.setMaquina(chamado.getMaquina());
+		chamadoEmail.setParada(chamado.getParada());
+		//emailService.enviar(chamadoEmail, "thaynanrodrigues96@gmail.com");
 		return chamado;
 	}
 
@@ -94,6 +96,8 @@ public class ChamadoService {
 		chamado.setDefeitos(defeitos);
 		chamado.setObservacoes(obj.getObservacoes());
 		chamado.setObsTec(obj.getObsTec());
+		chamado.setParada(obj.getParada());
+		chamado.setHoraParada(obj.getHoraParada());
 		
 		return chamado;
 	}

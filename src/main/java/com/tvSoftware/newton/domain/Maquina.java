@@ -13,6 +13,12 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Maquina implements Serializable {
+	@Override
+	public String toString() {
+		//return "Maquina [id=" + id + ", =" + nome + "]";
+		return nome;
+	}
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id

@@ -2,7 +2,7 @@ package com.tvSoftware.newton.domain.enums;
 
 public enum Status {
 
-	ABERTO(0, "ABERTO"), ANDAMENTO(1, "ANDAMENTO"), ENCERRADO(2, "ENCERRADO");
+	ABERTO(0, "ABERTO"), ANDAMENTO(1, "ANDAMENTO"), ENCERRADO(2, "ENCERRADO"), CANCELADO(3, "CANCELADO");
 	
 	private Integer codigo;
 	private String descricao;

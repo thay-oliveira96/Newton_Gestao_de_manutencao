@@ -20,12 +20,13 @@ public class EmailService {
 			email.setSSLOnConnect(true);
 
 			email.setFrom("newton.sistema@gmail.com");
-			email.setSubject("Chamado Aberto dia: " + chamado.getDataAbertura());
-			email.setMsg("Chamado: " + chamado.getId() + " foi aberto com sucesso \n" +
-			"Prioridade: " + chamado.getPrioridade() + "\nStatus: " + chamado.getStatus());
+			email.setSubject("Novo Chamado de nº: " + chamado.getId() + " " + " Aberto dia: " + chamado.getDataAbertura());
+			email.setMsg("Chamado: " + chamado.getId() + "\nMaquina: " + chamado.getMaquina() +
+					"\nTitulo da Ocorrência: " + chamado.getDefeitos() +
+					"\nEstado: " + chamado.getParada());
 			email.addTo(emailDestinatario);
 			email.send();
-
+			
 		} catch (EmailException e) {
 			e.printStackTrace();
 		}

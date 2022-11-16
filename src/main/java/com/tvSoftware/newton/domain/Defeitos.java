@@ -45,6 +45,12 @@ public class Defeitos implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	@Override
+	public String toString() {
+		return descricao;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, descricao);
