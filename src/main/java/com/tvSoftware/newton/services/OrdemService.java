@@ -9,23 +9,23 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tvSoftware.newton.domain.Chamado;
+import com.tvSoftware.newton.domain.Ordem;
 import com.tvSoftware.newton.domain.Cliente;
 import com.tvSoftware.newton.domain.Defeitos;
 import com.tvSoftware.newton.domain.Gestor;
 import com.tvSoftware.newton.domain.Maquina;
 import com.tvSoftware.newton.domain.Tecnico;
-import com.tvSoftware.newton.domain.dtos.ChamadoDTO;
+import com.tvSoftware.newton.domain.dtos.OrdemDTO;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
-import com.tvSoftware.newton.repositories.ChamadoRepository;
+import com.tvSoftware.newton.repositories.OrdemRepository;
 import com.tvSoftware.newton.services.exeptions.ObjectnotFoundException;
 
 @Service
-public class ChamadoService {
+public class OrdemService {
 
 	@Autowired
-	private ChamadoRepository repository;
+	private OrdemRepository repository;
 	@Autowired
 	private TecnicoService tecnicoService;
 	@Autowired
@@ -39,67 +39,67 @@ public class ChamadoService {
 	
 	EmailService emailService = new EmailService();
 
-	public Chamado findById(Integer id) {
-		Optional<Chamado> obj = repository.findById(id);
+	public Ordem findById(Integer id) {
+		Optional<Ordem> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ObjectnotFoundException("Objeto não encontrado! ID: " + id));
 	}
 
-	public List<Chamado> findAll() {
+	public List<Ordem> findAll() {
 		return repository.findAll();
 	}
 
-	public Chamado create(ChamadoDTO obj) {
-		Chamado chamado = repository.save(newChamado(obj));
-		Chamado chamadoEmail = new Chamado();
-		chamadoEmail.setId(chamado.getId());
-		chamadoEmail.setDataAbertura(chamado.getDataAbertura());
-		chamadoEmail.setCategoriaManutencao(chamado.getCategoriaManutencao());
-		chamadoEmail.setDefeitos(chamado.getDefeitos());
-		chamadoEmail.setMaquina(chamado.getMaquina());
-		chamadoEmail.setParada(chamado.getParada());
+	public Ordem create(OrdemDTO obj) {
+		Ordem ordem = repository.save(newChamado(obj));
+		Ordem chamadoEmail = new Ordem();
+		chamadoEmail.setId(ordem.getId());
+		chamadoEmail.setDataAbertura(ordem.getDataAbertura());
+		chamadoEmail.setCategoriaManutencao(ordem.getCategoriaManutencao());
+		chamadoEmail.setDefeitos(ordem.getDefeitos());
+		chamadoEmail.setMaquina(ordem.getMaquina());
+		chamadoEmail.setParada(ordem.getParada());
 		//emailService.enviar(chamadoEmail, "thaynanrodrigues96@gmail.com");
-		return chamado;
+		return ordem;
 	}
 
-	public Chamado update(Integer id, @Valid ChamadoDTO objDTO) {
+	public Ordem update(Integer id, @Valid OrdemDTO objDTO) {
 		objDTO.setId(id);
-		Chamado oldObj = findById(id);
+		Ordem oldObj = findById(id);
 		oldObj = newChamado(objDTO);
 		return repository.save(oldObj);
 	}
 
-	private Chamado newChamado(ChamadoDTO obj) {
+	private Ordem newChamado(OrdemDTO obj) {
 		Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
 		Cliente cliente = clienteService.findById(obj.getCliente());
 		Gestor gestor = gestorService.findById(obj.getGestor());
 		Defeitos defeitos = defeitoService.findById(obj.getDefeitos());
 		Maquina maquina = maquinaService.findById(obj.getMaquina());
 		
-		Chamado chamado = new Chamado();
+		Ordem ordem = new Ordem();
 		if(obj.getId() != null) {
-			chamado.setId(obj.getId());
+			ordem.setId(obj.getId());
 		}
 		
 		if(obj.getStatus().equals(2)) {
-			chamado.setDataFechamento(LocalDate.now());
+			ordem.setDataFechamento(LocalDate.now());
 		}
 		
 		
-		chamado.setTecnico(tecnico);
-		chamado.setCliente(cliente);
-		chamado.setGestor(gestor);
-		chamado.setMaquina(maquina);
-		chamado.setPrioridade(Prioridade.toEnum(obj.getPrioridade()));
-		chamado.setStatus(Status.toEnum(obj.getStatus()));
-		chamado.setTipoManutencao(obj.getTipoManutencao());
-		chamado.setCategoriaManutencao(obj.getCategoriaManutencao());
-		chamado.setDefeitos(defeitos);
-		chamado.setObservacoes(obj.getObservacoes());
-		chamado.setObsTec(obj.getObsTec());
-		chamado.setParada(obj.getParada());
-		chamado.setHoraParada(obj.getHoraParada());
+		ordem.setTecnico(tecnico);
+		ordem.setCliente(cliente);
+		ordem.setGestor(gestor);
+		ordem.setMaquina(maquina);
+		ordem.setPrioridade(Prioridade.toEnum(obj.getPrioridade()));
+		ordem.setStatus(Status.toEnum(obj.getStatus()));
+		ordem.setTipoManutencao(obj.getTipoManutencao());
+		ordem.setCategoriaManutencao(obj.getCategoriaManutencao());
+		ordem.setDefeitos(defeitos);
+		ordem.setObservacoes(obj.getObservacoes());
+		ordem.setObsTec(obj.getObsTec());
+		ordem.setParada(obj.getParada());
+		ordem.setHoraParada(obj.getHoraParada());
 		
-		return chamado;
+		return ordem;
 	}
 
 }

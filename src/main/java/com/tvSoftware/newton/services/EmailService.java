@@ -6,12 +6,12 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 import org.springframework.stereotype.Service;
 
-import com.tvSoftware.newton.domain.Chamado;
+import com.tvSoftware.newton.domain.Ordem;
 
 @Service
 public class EmailService {
 
-	public void enviar(Chamado chamado, String emailDestinatario) {
+	public void enviar(Ordem ordem, String emailDestinatario) {
 		try {
 			Email email = new SimpleEmail();
 			email.setHostName("smtp.gmail.com");
@@ -20,10 +20,10 @@ public class EmailService {
 			email.setSSLOnConnect(true);
 
 			email.setFrom("newton.sistema@gmail.com");
-			email.setSubject("Novo Chamado de nº: " + chamado.getId() + " " + " Aberto dia: " + chamado.getDataAbertura());
-			email.setMsg("Chamado: " + chamado.getId() + "\nMaquina: " + chamado.getMaquina() +
-					"\nTitulo da Ocorrência: " + chamado.getDefeitos() +
-					"\nEstado: " + chamado.getParada());
+			email.setSubject("Novo Chamado de nº: " + ordem.getId() + " " + " Aberto dia: " + ordem.getDataAbertura());
+			email.setMsg("Chamado: " + ordem.getId() + "\nMaquina: " + ordem.getMaquina() +
+					"\nTitulo da Ocorrência: " + ordem.getDefeitos() +
+					"\nEstado: " + ordem.getParada());
 			email.addTo(emailDestinatario);
 			email.send();
 			

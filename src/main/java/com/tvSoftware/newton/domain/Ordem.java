@@ -19,7 +19,7 @@ import com.tvSoftware.newton.domain.enums.Status;
 import com.tvSoftware.newton.domain.enums.TipoManutencao;
 
 @Entity
-public class Chamado implements Serializable {
+public class Ordem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -67,11 +67,11 @@ public class Chamado implements Serializable {
 	private String parada;
 
 
-	public Chamado() {
+	public Ordem() {
 		super();
 	}
 
-	public Chamado(Integer id, Prioridade prioridade, Status status,
+	public Ordem(Integer id, Prioridade prioridade, Status status,
 			TipoManutencao tipoManutencao, CategoriaManutencao categoriaManutencao, 
 			Defeitos defeitos, String observacoes, String obsTec, Tecnico tecnico,
 			Cliente cliente, Gestor gestor, Maquina maquina, String parada, String horaParada) {
@@ -238,7 +238,7 @@ public class Chamado implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Chamado other = (Chamado) obj;
+		Ordem other = (Ordem) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

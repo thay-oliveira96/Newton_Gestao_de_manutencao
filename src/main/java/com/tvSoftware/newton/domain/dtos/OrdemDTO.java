@@ -6,11 +6,11 @@ import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.tvSoftware.newton.domain.Chamado;
+import com.tvSoftware.newton.domain.Ordem;
 import com.tvSoftware.newton.domain.enums.CategoriaManutencao;
 import com.tvSoftware.newton.domain.enums.TipoManutencao;
 
-public class ChamadoDTO implements Serializable {
+public class OrdemDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
@@ -49,11 +49,11 @@ public class ChamadoDTO implements Serializable {
 	private String parada;
 	private String horaParada;
 
-	public ChamadoDTO() {
+	public OrdemDTO() {
 		super();
 	}
 
-	public ChamadoDTO(Chamado obj) {
+	public OrdemDTO(Ordem obj) {
 		this.id = obj.getId();
 		this.dataAbertura = obj.getDataAbertura();
 		this.dataFechamento = obj.getDataFechamento();

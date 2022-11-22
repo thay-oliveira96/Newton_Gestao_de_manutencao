@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tvSoftware.newton.domain.Chamado;
+import com.tvSoftware.newton.domain.Ordem;
 import com.tvSoftware.newton.domain.Cliente;
 import com.tvSoftware.newton.domain.Defeitos;
 import com.tvSoftware.newton.domain.Departamentos;
@@ -18,7 +18,7 @@ import com.tvSoftware.newton.domain.enums.Perfil;
 import com.tvSoftware.newton.domain.enums.Prioridade;
 import com.tvSoftware.newton.domain.enums.Status;
 import com.tvSoftware.newton.domain.enums.TipoManutencao;
-import com.tvSoftware.newton.repositories.ChamadoRepository;
+import com.tvSoftware.newton.repositories.OrdemRepository;
 import com.tvSoftware.newton.repositories.DefeitosRepository;
 import com.tvSoftware.newton.repositories.DepartamentosRepository;
 import com.tvSoftware.newton.repositories.MaquinaRepository;
@@ -28,7 +28,7 @@ import com.tvSoftware.newton.repositories.PessoaRepository;
 public class DBService {
 
 	@Autowired
-	private ChamadoRepository chamadoRepository;
+	private OrdemRepository ordemRepository;
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	@Autowired
@@ -61,20 +61,20 @@ public class DBService {
 		
 		Defeitos d1 = new Defeitos(null, "Quebra de corrente");
 		
-		Maquina m1 = new Maquina(null, "maquina 3", dpto1, "Maquina da fabricacao geral");
+		Maquina m1 = new Maquina(null, "MAQUINA 3", dpto1, "Maquina da fabricacao geral");
  
-		Chamado c1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 1", "jssk", tec1, cli1, gest1, m1, "Em Funcionamento", "12:00");
-		Chamado c2 = new Chamado(null, Prioridade.ALTA, Status.ABERTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 2", "jssk",tec1, cli2, gest1, m1, "Maquina Parada", "12:00");
-		Chamado c3 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 3", "jssk",tec2, cli3, gest1, m1, "Maquina Parada", "12:00");
-		Chamado c4 = new Chamado(null, Prioridade.ALTA, Status.CANCELADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 4", "jssk", tec3, cli3, gest1, m1, "Maquina Parada", "12:00");
-		Chamado c5 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 5", "jssk", tec2, cli1, gest1, m1, "Maquina Parada", "12:00");
-		Chamado c6 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 6", "jssk", tec1, cli5, gest1, m1, "Maquina Parada", "12:00");
+		Ordem c1 = new Ordem(null, Prioridade.MEDIA, Status.ANDAMENTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 1", "jssk", tec1, cli1, gest1, m1, "Em Funcionamento", "12:00");
+		Ordem c2 = new Ordem(null, Prioridade.ALTA, Status.ABERTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 2", "jssk",tec1, cli2, gest1, m1, "Maquina Parada", "12:00");
+		Ordem c3 = new Ordem(null, Prioridade.BAIXA, Status.ENCERRADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 3", "jssk",tec2, cli3, gest1, m1, "Maquina Parada", "12:00");
+		Ordem c4 = new Ordem(null, Prioridade.ALTA, Status.CANCELADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 4", "jssk", tec3, cli3, gest1, m1, "Maquina Parada", "12:00");
+		Ordem c5 = new Ordem(null, Prioridade.MEDIA, Status.ANDAMENTO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 5", "jssk", tec2, cli1, gest1, m1, "Maquina Parada", "12:00");
+		Ordem c6 = new Ordem(null, Prioridade.BAIXA, Status.ENCERRADO, TipoManutencao.CORRETIVA, CategoriaManutencao.MECANICA, d1, "Teste chamado 6", "jssk", tec1, cli5, gest1, m1, "Maquina Parada", "12:00");
 		
 
 		pessoaRepository.saveAll(Arrays.asList(tec1, tec2, tec3, tec4, tec5, cli1, cli2, cli3, cli4, cli5, gest1));
 		defeitosRepository.saveAll(Arrays.asList(d1));
 		departamentoRepository.saveAll(Arrays.asList(dpto1));
 		maquinaRepository.saveAll(Arrays.asList(m1));
-		chamadoRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
+		ordemRepository.saveAll(Arrays.asList(c1, c2, c3, c4, c5, c6));
 	}
 }

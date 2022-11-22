@@ -17,40 +17,40 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.tvSoftware.newton.domain.Chamado;
-import com.tvSoftware.newton.domain.dtos.ChamadoDTO;
-import com.tvSoftware.newton.services.ChamadoService;
+import com.tvSoftware.newton.domain.Ordem;
+import com.tvSoftware.newton.domain.dtos.OrdemDTO;
+import com.tvSoftware.newton.services.OrdemService;
 
 @RestController
-@RequestMapping(value = "/chamados")
-public class ChamadoResource {
+@RequestMapping(value = "/ordens")
+public class OrdemResource {
 
 	@Autowired
-	private ChamadoService service;
+	private OrdemService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ChamadoDTO> findById(@PathVariable Integer id) {
-		Chamado obj = service.findById(id);
-		return ResponseEntity.ok().body(new ChamadoDTO(obj));
+	public ResponseEntity<OrdemDTO> findById(@PathVariable Integer id) {
+		Ordem obj = service.findById(id);
+		return ResponseEntity.ok().body(new OrdemDTO(obj));
 	}
 
 	@GetMapping
-	public ResponseEntity<List<ChamadoDTO>> findAll() {
-		List<Chamado> list = service.findAll();
-		List<ChamadoDTO> listDTO = list.stream().map(obj -> new ChamadoDTO(obj)).collect(Collectors.toList());
+	public ResponseEntity<List<OrdemDTO>> findAll() {
+		List<Ordem> list = service.findAll();
+		List<OrdemDTO> listDTO = list.stream().map(obj -> new OrdemDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 
 	@PostMapping
-	public ResponseEntity<ChamadoDTO> create(@Valid @RequestBody ChamadoDTO obj) {
-		Chamado newObj = service.create(obj);
+	public ResponseEntity<OrdemDTO> create(@Valid @RequestBody OrdemDTO obj) {
+		Ordem newObj = service.create(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ChamadoDTO> update(@PathVariable Integer id, @Valid @RequestBody ChamadoDTO objDTO) {
-		Chamado newObj = service.update(id, objDTO);
-		return ResponseEntity.ok().body(new ChamadoDTO(newObj));
+	public ResponseEntity<OrdemDTO> update(@PathVariable Integer id, @Valid @RequestBody OrdemDTO objDTO) {
+		Ordem newObj = service.update(id, objDTO);
+		return ResponseEntity.ok().body(new OrdemDTO(newObj));
 	}
 }

@@ -22,7 +22,7 @@ public class Gestor extends Pessoa {
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "gestor") //O Gestor tem diversos chamados 
-	private List<Chamado> chamados = new ArrayList<>();
+	private List<Ordem> ordems = new ArrayList<>();
 
 	public Gestor() {
 		super();
@@ -46,12 +46,12 @@ public class Gestor extends Pessoa {
 		this.dataCriacao = obj.getDataCriacao();
 	}
 
-	public List<Chamado> getChamados() {
-		return chamados;
+	public List<Ordem> getChamados() {
+		return ordems;
 	}
 
-	public void setChamados(List<Chamado> chamados) {
-		this.chamados = chamados;
+	public void setChamados(List<Ordem> ordems) {
+		this.ordems = ordems;
 	}
 	
 	
